@@ -12,7 +12,7 @@ namespace Dawn\Auth\auth;
 
 use think\Model;
 
-class Authenticatable extends Model implements \DawnApi\contracts\auth\Authenticatable
+class Authenticatable extends Model implements \Dawn\Auth\contracts\auth\Authenticatable
 {
     public function retrieveByToken($identifier, $token)
     {

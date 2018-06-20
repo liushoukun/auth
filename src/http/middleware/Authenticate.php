@@ -24,7 +24,7 @@ class Authenticate
         try {
             $this->authenticate($guard);
         } catch (AuthenticationException $e) {
-            return response(['code' => 401, 'message' => $e->getMessage()], 401);
+            return response(['code' => 401, 'message' => $e->getMessage()], 401,[],'json');
         }
         $request->hook('auth', function () use ($guard) {
             return $this->auth->guard($guard);

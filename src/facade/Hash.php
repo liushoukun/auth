@@ -10,13 +10,14 @@
 namespace Dawn\Auth\facade;
 
 
+use Dawn\Auth\hashing\HashManager;
 use think\Facade;
 
 class Hash extends Facade
 {
     protected static function getFacadeClass()
     {
-        return \DawnApi\hashing\HashManager::class;
+        return HashManager::class;
     }
 
 

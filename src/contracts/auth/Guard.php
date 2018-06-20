@@ -49,10 +49,8 @@ interface Guard
     public function validate(array $credentials = []);
 
     /**
-     * Set the current user.
-     *
-     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
-     * @return void
+     * @param Authenticatable $user
+     * @return mixed
      */
     public function setUser(Authenticatable $user);
 

@@ -30,7 +30,7 @@ class HashManager
     {
         $this->app = $app;
         $name = $this->getDafaultDriver();
-        $this->driver = Loader::factory($name, '\\DawnApi\\hashing\\', []);
+        $this->driver = Loader::factory($name, '\\Dawn\\Auth\\hashing\\', []);
     }
 
     public function info($hashedValue)

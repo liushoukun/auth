@@ -82,7 +82,7 @@ trait GuardHelpers
     /**
      * Set the current user.
      *
-     * @param  \DawnApi\auth\Authenticatable  $user
+     * @param  \Dawn\Auth\auth\Authenticatable  $user
      * @return $this
      */
     public function setUser(Authenticatable $user)
@@ -92,11 +92,8 @@ trait GuardHelpers
         return $this;
     }
 
-    /**
-     * Get the user provider used by the guard.
-     *
-     * @return \Illuminate\Contracts\Auth\UserProvider
-     */
+
+
     public function getProvider()
     {
         return $this->provider;
@@ -104,7 +101,7 @@ trait GuardHelpers
 
     /**
      * Set the user provider used by the guard.
-     * @return void
+     * @param $provider
      */
     public function setProvider($provider)
     {

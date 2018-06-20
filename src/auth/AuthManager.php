@@ -26,9 +26,8 @@ class AuthManager
 
 
     /**
-     * Create a new Auth manager instance.
-     *
-     * @return void
+     * AuthManager constructor.
+     * @param App $app
      */
     public function __construct(App $app)
     {
@@ -47,9 +46,7 @@ class AuthManager
 
 
     /**
-     * Attempt to get the guard from the local cache.
-     *
-     * @param  string $name
+     * @param null $name
      * @return \Illuminate\Contracts\Auth\Guard|\Illuminate\Contracts\Auth\StatefulGuard
      */
     public function guard($name = null)
@@ -100,7 +97,7 @@ class AuthManager
         // that takes an API token field from the request and matches it to the
         // user in the database or another persistence layer where users are.
 
-        $guard = new TokenGurd(
+        $guard = new TokenGuard(
             $this->createUserProvider($config['provider']),
             $this->app['request']
         );

@@ -2,28 +2,26 @@
 // +----------------------------------------------------------------------
 // | When work is a pleasure, life is a joy!
 // +----------------------------------------------------------------------
-// | User: shook Liu  |  Email:24147287@qq.com  | Time: 2018/6/7/007 12:03
+// | User: shook Liu  |  Email:24147287@qq.com  | Time: 2018/6/20/020 20:49
 // +----------------------------------------------------------------------
 // | TITLE: todo?
 // +----------------------------------------------------------------------
 
-namespace Dawn\Auth\facade;
+namespace Dawn\Auth\http\controllers;
 
 
-use Dawn\Auth\auth\AuthManager;
-use think\Facade;
+use Dawn\Auth\facade\Auth;
+use think\Controller;
 
-/**
- * Class Auth
- * @see \Dawn\Auth\auth\AuthManager
- * @mixin \Dawn\Auth\auth\AuthManager
- */
-class Auth extends Facade
+class AuthController extends Controller
 {
-    protected static function getFacadeClass()
-    {
-      return AuthManager::class;
-    }
 
+
+    public function token()
+    {
+
+
+
+    }
 
 }
