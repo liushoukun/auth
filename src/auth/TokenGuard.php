@@ -36,15 +36,7 @@ class TokenGuard implements Guard
     }
 
 
-    public function guest()
-    {
-        // TODO: Implement guest() method.
-    }
 
-    public function id()
-    {
-        // TODO: Implement id() method.
-    }
 
     public function validate(array $credentials = [])
     {

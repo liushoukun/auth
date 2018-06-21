@@ -53,7 +53,7 @@ class AuthManager
     {
         $name = $name ?: $this->getDefaultDriver();
 
-        return $this->guards[$name] ?? $this->guards[$name] = $this->resolve($name);
+        return $this->guards[$name] ??  $this->guards[$name] = $this->resolve($name);
     }
 
     /**
@@ -69,12 +69,12 @@ class AuthManager
 
         $config = $this->getConfig($name);
 
-
         if (is_null($config)) {
             throw new InvalidArgumentException("Auth guard [{$name}] is not defined.");
         }
 
         $driverMethod = 'create' . ucfirst($config['driver']) . 'Driver';
+
 
         if (method_exists($this, $driverMethod)) {
             return $this->{$driverMethod}($name, $config);
@@ -93,15 +93,22 @@ class AuthManager
      */
     public function createTokenDriver($name, $config)
     {
-        // The token guard implements a basic API token based guard implementation
-        // that takes an API token field from the request and matches it to the
-        // user in the database or another persistence layer where users are.
 
         $guard = new TokenGuard(
             $this->createUserProvider($config['provider']),
             $this->app['request']
         );
 
+        return $guard;
+    }
+
+    public function createSessionDriver($name, $config)
+    {
+
+        $guard = new SessionGuard(
+            $this->createUserProvider($config['provider']),
+            $this->app['request']
+        );
         return $guard;
     }
 
@@ -142,6 +149,7 @@ class AuthManager
     public function shouldUse($name)
     {
         $name = $name ?: $this->getDefaultDriver();
+
         $this->setDefaultDriver($name);
         $this->userResolver = function ($name = null) {
             return $this->guard($name)->user();
@@ -156,7 +164,7 @@ class AuthManager
      */
     public function setDefaultDriver($name)
     {
-        $this->app->config('auth.defaults.guard', $name);
+        $this->app->config->set('auth.defaults.guard', $name);
     }
 
 

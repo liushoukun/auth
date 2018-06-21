@@ -38,7 +38,6 @@ trait CreatesUserProviders
         $driver = $config['driver'];
         switch ($driver) {
             case 'database':
-                return;
                 return $this->createDatabaseProvider($config);
             case 'eloquent':
                 return $this->createEloquentProvider($config);

@@ -21,6 +21,7 @@ class Authenticate
     public function handle(Request $request, \Closure $next, $guard)
     {
         // 添加中间件执行代码
+
         try {
             $this->authenticate($guard);
         } catch (AuthenticationException $e) {
@@ -35,13 +36,10 @@ class Authenticate
 
     public function authenticate($guard)
     {
-        if (empty($guard)) {
-            return;
-        }
-        if ($guard) {
-            if ($this->auth->guard($guard)->check()) {
-                return $this->auth->shouldUse($guard);
-            }
+
+        $this->auth->guard($guard);
+        if ($this->auth->guard($guard)->check()) {
+            return $this->auth->shouldUse($guard);
         }
         throw new AuthenticationException('Unauthenticated:' . $guard);
     }
