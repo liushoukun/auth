@@ -1,0 +1,21 @@
+{
+    "name": "liushouk/auth",
+    "description": "auth of thinkphp 5",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "liu shoukun",
+            "email": "24147287@qq.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "lcobucci/jwt": "^3.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Dawn\\Auth\\": "src"
+        }
+    }
+}
