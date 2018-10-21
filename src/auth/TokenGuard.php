@@ -55,7 +55,12 @@ class TokenGuard implements Guard
         $token = $this->getTokenForRequest();
 
         if (!empty($token)) {
-            $token = (new Parser())->parse($token);
+            try{
+                $token = (new Parser())->parse($token);
+            }catch (\Exception $exception){
+                throw new AuthenticationException('token error');
+            }
+
             $sign = new Sha256();
             $data = new ValidationData();
             $key = config('auth.app_key', '');
