@@ -63,7 +63,7 @@ class TokenGuard implements Guard
 
             $sign = new Sha256();
             $data = new ValidationData();
-            $key = config('auth.app_key', '');
+            $key = config('auth.app_key');
             if ($token->verify($sign, $key) && $token->validate($data)) {
                 $user = $this->provider->retrieveById($token->getClaim('uid'));
             } else {
@@ -113,7 +113,7 @@ class TokenGuard implements Guard
         $iss = config('auth.jwt.iss', 'http://*');
         $sign = new Sha256();
         $builder = new Builder();
-        $key = config('auth.app_key', '');
+        $key = config('auth.app_key');
         $token = $builder
             ->setIssuer($iss)// 配置发行者（ISS声明）
             // ->setId('4f1g23a12aa', true)// Configures the id (jti claim), replicating as a header item jwt的唯一身份标识，主要用来作为一次性token,从而回避重放攻击。
