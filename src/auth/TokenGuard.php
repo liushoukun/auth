@@ -36,8 +36,6 @@ class TokenGuard implements Guard
     }
 
 
-
-
     public function validate(array $credentials = [])
     {
         // TODO: Implement validate() method.
@@ -55,9 +53,9 @@ class TokenGuard implements Guard
         $token = $this->getTokenForRequest();
 
         if (!empty($token)) {
-            try{
+            try {
                 $token = (new Parser())->parse($token);
-            }catch (\Exception $exception){
+            } catch (\Exception $exception) {
                 throw new AuthenticationException('token error');
             }
 
@@ -71,6 +69,12 @@ class TokenGuard implements Guard
             }
         }
         return $this->user = $user;
+    }
+
+
+    public function getParserToken()
+    {
+        return (new Parser())->parse($this->getTokenForRequest());
     }
 
     /**
@@ -110,7 +114,7 @@ class TokenGuard implements Guard
         } catch (\Exception $e) {
             throw new HttpResponseException(response(['code' => 401, 'message' => 'Unauthenticated'], 401, [], 'json'));
         }
-        $iss = config('auth.jwt.iss', 'http://*');
+        $iss = config('auth.jwt.iss');
         $sign = new Sha256();
         $builder = new Builder();
         $key = config('auth.app_key');
@@ -120,8 +124,17 @@ class TokenGuard implements Guard
             ->setIssuedAt(time())// Configures the time that the token was issue (iat claim) jwt的签发时间
             ->setNotBefore(time())// Configures the time that the token can be used (nbf claim) 定义在什么时间之前，该jwt都是不可用的.
             ->setExpiration(time() + $exp)// Configures the expiration time of the token (exp claim)  jwt的过期时间，这个过期时间必须要大于签发时间
-            ->set('uid', $user[$user->getAuthIdentifier()])// Configures a new claim, called "uid"
-            ->sign($sign, $key)
+            ->set('uid', $user[$user->getAuthIdentifier()]);// Configures a new claim, called "uid"
+        if (is_object($user)) {
+            if (method_exists($user, 'getJWTCustomClaims')) {
+                $item = $user->getJWTCustomClaims();
+                foreach ($item as $claim => $value) {
+                    $token->set((string)$claim, (string)$value);
+                }
+            }
+        }
+
+        $token = $token->sign($sign, $key)
             ->getToken(); // Retrieves the generated token
         return $token;
     }
